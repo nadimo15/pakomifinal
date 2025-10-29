@@ -1,0 +1,129 @@
+// This is your Prisma schema file.
+// It defines your database models and their relationships.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Singleton Configuration Models
+// These models will hold a single entry with a JSON blob for all settings.
+model SiteSettings {
+  id   String @id @default("singleton")
+  data Json
+}
+
+model FormConfig {
+  id   String @id @default("singleton")
+  data Json
+}
+
+// Product and Product Management Models
+model Product {
+  id               String  @id
+  name             String
+  galleryImagesB64 Json?
+  availableColors  Json?
+  displayOrder     Int     @default(0)
+  sizes            ProductSize[]
+}
+
+model ProductSize {
+  id        String  @id @default(cuid())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  width     Float
+  height    Float
+  depth     Float?
+  weight    Float
+  pricing   Json
+}
+
+// Order and Related Models
+model Order {
+  id           String        @id
+  submittedAt  DateTime      @default(now())
+  clientName   String
+  phone        String
+  email        String
+  address      String
+  wilaya       String
+  commune      String
+  socials      Json?
+  shippingInfo Json?
+  totalPrice   Float
+  totalWeight  Float
+  status       String        @default("Pending")
+  userId       String?
+  lineItems    OrderLineItem[]
+  chatMessages ChatMessage[]
+  review       Review?
+}
+
+model OrderLineItem {
+  id          String @id @default(cuid())
+  order       Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
+  productType String
+  productName String
+  width       Float?
+  height      Float?
+  depth       Float?
+  quantity    Int
+  logoUrl     String?
+  logoProps   Json?
+  color       String?
+  description String?
+  unitPrice   Float
+  itemWeight  Float
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  text      String?
+  sender    String
+  fileUrl   String?
+  fileName  String?
+  fileType  String?
+  timestamp DateTime @default(now())
+}
+
+model Review {
+  id      String @id @default(cuid())
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId String @unique
+  rating  Int
+  comment String?
+}
+
+// Admin and Task Management Models
+model Task {
+  id         String   @id @default(cuid())
+  text       String
+  priority   String
+  isCompleted Boolean  @default(false)
+  createdAt  String
+}
+
+// User and Auth Models
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  permissions String[]
+  users       User[]
+}
+
+model User {
+  id           String  @id @default(cuid())
+  name         String
+  email        String  @unique
+  passwordHash String
+  role         Role    @relation(fields: [roleId], references: [id])
+  roleId       String
+}

@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # Laravel Application Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pakomi-laravel-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - db
+    networks:
+      - pakomi-network
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - APP_URL=${APP_URL}
+      - APP_KEY=${APP_KEY}
+
+  # MySQL Database Service
+  db:
+    image: mysql:8.0
+    container_name: pakomi-mysql-db
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT:-3306}:3306" # Exposes port to host, useful for local debugging
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - pakomi-db-data:/var/lib/mysql
+    networks:
+      - pakomi-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pakomi-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - pakomi-network
+
+# Networks
+networks:
+  pakomi-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  pakomi-db-data:
+    driver: local
