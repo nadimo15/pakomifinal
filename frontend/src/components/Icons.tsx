@@ -59,3 +59,40 @@ export const LinkIcon: React.FC<IconProps> = (p) => (
   <Svg {...p} path={<path d="M10 13a5 5 0 0 1 0-7l2-2a5 5 0 1 1 7 7l-1 1M14 11a5 5 0 0 1 0 7l-2 2a5 5 0 1 1-7-7l1-1"/>} />
 );
 
+// Additional UI icons used across pages
+export const SendIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>} />
+);
+export const PaperClipIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M21 12.5V7a5 5 0 1 0-10 0v9a3 3 0 0 1-6 0V9"/>} />
+);
+export const FileIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 2v6h6"/>} />
+);
+export const DownloadIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/>} />
+);
+export const XCircleIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-4-6 2 2 4-4"/>} />
+);
+export const RefreshCwIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M21 12a9 9 0 1 1-2.6-6.4M21 5v7h-7"/>} />
+);
+export const FileTextIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM9 13h6M9 17h6M14 2v6h6"/>} />
+);
+export const PencilRulerIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M15 3l6 6M8 16l-5 5 1 1 5-5m2-2l7-7-4-4-7 7v4h4z"/>} />
+);
+export const PrinterIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M6 9V3h12v6M6 18h12v3H6zM4 12h16a2 2 0 0 1 2 2v4H2v-4a2 2 0 0 1 2-2z"/>} />
+);
+export const PackageIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M21 16V8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/>} />
+);
+export const TruckIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M3 17V6h10v11M13 13h5l3 3v1h-2a2 2 0 1 1-4 0H9a2 2 0 1 1-4 0H3"/>} />
+);
+export const CheckCircle2Icon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-3-10 2 2 4-4"/>} />
+);
