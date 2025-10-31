@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocalization } from '../hooks/useLocalization';
-import { useCart } from '../hooks/useCart';
-import { useAuth } from '../hooks/useAuth';
-import { addOrder, getFormConfig } from '../api';
-import type { Language, Socials, Baladiya, Order, FormConfig } from '../types';
-import { WILAYAS } from '../algeria-locations';
-import { FacebookIcon, InstagramIcon, TikTokIcon, WhatsAppIcon, ViberIcon, PlusIcon, TrashIcon } from '../components/Icons';
-import SocialInput from '../components/SocialInput';
-import { SOCIAL_PLATFORMS } from '../constants';
+import { useLocalization } from '../hooks/useLocalization.ts';
+import { useCart } from '../hooks/useCart.ts';
+import { useAuth } from '../hooks/useAuth.ts';
+import { addOrder, getFormConfig } from '../api.ts';
+import type { Language, Socials, Baladiya, Order, FormConfig } from '../types.ts';
+import { WILAYAS } from '../algeria-locations.ts';
+import { FacebookIcon, InstagramIcon, TikTokIcon, WhatsAppIcon, ViberIcon, PlusIcon, TrashIcon } from '../components/Icons.tsx';
+import SocialInput from '../components/SocialInput.tsx';
+import { SOCIAL_PLATFORMS } from '../constants.ts';
 
 interface CheckoutPageProps {
   language: Language;
@@ -27,7 +27,27 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ language, navigate }) => {
     const prevWilayaRef = useRef<string | undefined>(undefined);
 
     useEffect(() => {
-        getFormConfig().then(config => setFormConfig(config.yourDetails));
+        getFormConfig()
+          .then(config => setFormConfig(config.yourDetails))
+          .catch(() => {
+            setFormConfig({
+              enabled: true,
+              fields: [
+                { id: 'clientName', enabled: true, required: true },
+                { id: 'emailAddress', enabled: true, required: false },
+                { id: 'phone', enabled: true, required: true },
+                { id: 'wilaya', enabled: true, required: true },
+                { id: 'commune', enabled: true, required: true },
+                { id: 'address', enabled: true, required: true },
+                { id: 'whatsapp', enabled: true, required: false },
+                { id: 'viber', enabled: true, required: false },
+                { id: 'facebook', enabled: true, required: false },
+                { id: 'instagram', enabled: true, required: false },
+                { id: 'tiktok', enabled: true, required: false },
+                { id: 'otherSocials', enabled: true, required: false },
+              ]
+            });
+          });
     }, []);
 
     useEffect(() => {
