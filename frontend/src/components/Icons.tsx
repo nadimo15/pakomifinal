@@ -105,6 +105,10 @@ export const TruckIcon: React.FC<IconProps> = (p) => (
 export const CheckCircle2Icon: React.FC<IconProps> = (p) => (
   <Svg {...p} path={<path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-3-10 2 2 4-4"/>} />
 );
+// Simple outlined check-circle for ThankYouPage
+export const CheckCircleIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-3-10 2 2 5-5"/>} />
+);
 
 // Messaging brand icons used in ChatModal
 export const WhatsAppIcon: React.FC<IconProps> = (p) => (
