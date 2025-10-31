@@ -23,8 +23,61 @@ export const getPublicData = async (req: Request, res: Response) => {
             return acc;
         }, {} as Record<string, any[]>);
 
+        const s = (settings?.data as any) || {};
+        const normalizedSettings = {
+            brandName: s.brandName || '',
+            logoB64: s.logoB64 || '',
+            hero: {
+                title: s?.hero?.title || '',
+                subtitle: s?.hero?.subtitle || '',
+                ctaText: s?.hero?.ctaText || '',
+                heroImageB64: s?.hero?.heroImageB64 || '',
+            },
+            services: {
+                enabled: !!s?.services?.enabled,
+                title: s?.services?.title || '',
+                items: s?.services?.items || [],
+            },
+            howItWorks: {
+                enabled: !!s?.howItWorks?.enabled,
+                title: s?.howItWorks?.title || '',
+                steps: s?.howItWorks?.steps || [],
+            },
+            testimonials: {
+                enabled: !!s?.testimonials?.enabled,
+                title: s?.testimonials?.title || '',
+                items: s?.testimonials?.items || [],
+            },
+            faq: {
+                enabled: !!s?.faq?.enabled,
+                title: s?.faq?.title || '',
+                items: s?.faq?.items || [],
+            },
+            thankYouPage: {
+                title: s?.thankYouPage?.title || 'Thank you!',
+                message: s?.thankYouPage?.message || 'Your order was received. We will contact you shortly.',
+            },
+            upsell: {
+                enabled: !!s?.upsell?.enabled,
+                title: s?.upsell?.title || 'You may also like',
+                productIds: s?.upsell?.productIds || [],
+            },
+            tracking: {
+                facebookPixelId: s?.tracking?.facebookPixelId || '',
+                tiktokPixelId: s?.tracking?.tiktokPixelId || '',
+                snapchatPixelId: s?.tracking?.snapchatPixelId || '',
+                googleAnalyticsId: s?.tracking?.googleAnalyticsId || '',
+            },
+            footer: {
+                address: s?.footer?.address || '',
+                email: s?.footer?.email || '',
+                phone: s?.footer?.phone || '',
+                links: s?.footer?.links || [],
+            },
+        };
+
         res.status(200).json({
-            settings: settings?.data,
+            settings: normalizedSettings,
             products,
             sizes: sizesByProduct,
         });
