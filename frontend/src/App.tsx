@@ -62,12 +62,12 @@ function App() {
             const siteSettings = await getSiteSettings();
             if (!siteSettings) return;
             
-            const { tracking } = siteSettings;
+            const tracking = siteSettings?.tracking || {} as any;
             
             // Clear previous scripts to avoid duplication on hot reload
             document.querySelectorAll('[data-tracking-script]').forEach(e => e.remove());
 
-            if (tracking.googleAnalyticsId) {
+            if (tracking?.googleAnalyticsId) {
                 const gtagScript = document.createElement('script');
                 gtagScript.async = true;
                 gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${tracking.googleAnalyticsId}`;
@@ -85,7 +85,7 @@ function App() {
                 document.head.appendChild(gtagConfigScript);
             }
             
-            if (tracking.facebookPixelId) {
+            if (tracking?.facebookPixelId) {
                 const fbScript = document.createElement('script');
                 fbScript.dataset.trackingScript = 'true';
                 fbScript.innerHTML = `
@@ -103,7 +103,7 @@ function App() {
                 document.head.appendChild(fbScript);
             }
             
-            if (tracking.tiktokPixelId) {
+            if (tracking?.tiktokPixelId) {
                 const tiktokScript = document.createElement('script');
                 tiktokScript.dataset.trackingScript = 'true';
                 tiktokScript.innerHTML = `
@@ -115,7 +115,7 @@ function App() {
                 document.head.appendChild(tiktokScript);
             }
             
-            if (tracking.snapchatPixelId) {
+            if (tracking?.snapchatPixelId) {
                 const snapchatScript = document.createElement('script');
                 snapchatScript.dataset.trackingScript = 'true';
                 snapchatScript.innerHTML = `
@@ -125,8 +125,8 @@ function App() {
                     var r=t.createElement('script');r.async=!0;r.src=s;
                     var u=t.getElementsByTagName('script')[0];
                     u.parentNode.insertBefore(r,u);})(window,document);
-                    snaptr('init', '${tracking.snapchatPixelId}');
-                    snaptr('track', 'PAGE_VIEW');
+                    ${tracking?.snapchatPixelId ? `snaptr('init', '${tracking.snapchatPixelId}');` : ''}
+                    ${tracking?.snapchatPixelId ? `snaptr('track', 'PAGE_VIEW');` : ''}
                 `;
                 document.head.appendChild(snapchatScript);
             }

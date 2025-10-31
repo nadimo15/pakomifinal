@@ -71,7 +71,7 @@ const HomePage: React.FC<HomePageProps> = ({ language, navigate }) => {
 
   return (
     <>
-      <HeroSection language={language} settings={settings.hero} />
+      {settings?.hero && <HeroSection language={language} settings={settings.hero} />}
       
       <div id="product-section" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <ProductSelector
@@ -81,10 +81,10 @@ const HomePage: React.FC<HomePageProps> = ({ language, navigate }) => {
         />
       </div>
 
-      {settings.services.enabled && <ServicesSection language={language} settings={settings.services} />}
-      {settings.howItWorks.enabled && <HowItWorksSection language={language} settings={settings.howItWorks} />}
-      {settings.testimonials.enabled && <TestimonialsSection language={language} settings={settings.testimonials} />}
-      {settings.faq.enabled && <FaqSection language={language} settings={settings.faq} />}
+      {settings?.services?.enabled && <ServicesSection language={language} settings={settings.services} />}
+      {settings?.howItWorks?.enabled && <HowItWorksSection language={language} settings={settings.howItWorks} />}
+      {settings?.testimonials?.enabled && <TestimonialsSection language={language} settings={settings.testimonials} />}
+      {settings?.faq?.enabled && <FaqSection language={language} settings={settings.faq} />}
     </>
   );
 };
