@@ -31,7 +31,14 @@ const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({ message: `HTTP Error: ${response.statusText}` }));
-            throw new Error(errorData.message || 'An unknown API error occurred.');
+            const err = new Error(errorData.message || 'An unknown API error occurred.');
+            // Surface fewer red errors for expected 401s on admin endpoints when logged out
+            if (endpoint.startsWith('/admin')) {
+                console.warn(`API call to ${endpoint} failed:`, err);
+            } else {
+                console.error(`API call to ${endpoint} failed:`, err);
+            }
+            throw err;
         }
 
         if (response.status === 204) {
@@ -40,7 +47,11 @@ const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
         
         return response.json();
     } catch (error) {
-        console.error(`API call to ${endpoint} failed:`, error);
+        if (endpoint.startsWith('/admin')) {
+            console.warn(`API call to ${endpoint} failed:`, error);
+        } else {
+            console.error(`API call to ${endpoint} failed:`, error);
+        }
         throw error;
     }
 };
