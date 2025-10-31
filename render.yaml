@@ -3,7 +3,7 @@ services:
     name: pakomi-backend
     runtime: node
     rootDir: backend
-    buildCommand: "npm install && npx prisma generate && npm run build"
+    buildCommand: "npm install && npx prisma generate && npm run build && npx prisma db push && npm run seed"
     startCommand: "npm start"
     healthCheckPath: /api
     envVars:
@@ -17,9 +17,8 @@ services:
         value: https://pakomi-frontend.onrender.com
       - key: PORT
         value: "3001"
-    postDeployCommand: "npm run db:push && npm run seed"
-    plan: free
     autoDeploy: true
+    plan: free
 
   - type: web
     name: pakomi-frontend
