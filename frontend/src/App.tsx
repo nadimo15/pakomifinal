@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import Header from '../../components/Header.tsx';
-import Footer from '../../components/Footer.tsx';
+import Header from './components/Header.tsx';
+import Footer from './components/Footer.tsx';
 import HomePage from './pages/HomePage.tsx';
 import TrackOrderPage from './pages/TrackOrderPage.tsx';
 import AdminPage from './pages/AdminPage.tsx';
@@ -13,7 +13,7 @@ import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegisterPage.tsx';
 import ProfilePage from './pages/ProfilePage.tsx';
 import ProductCustomizationPage from './pages/ProductCustomizationPage.tsx';
-import { Language } from '../../types.ts';
+import { Language } from './types.ts';
 import { getSiteSettings } from './api.ts';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { useAuth } from './hooks/useAuth.ts';

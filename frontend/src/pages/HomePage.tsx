@@ -8,6 +8,7 @@ import ServicesSection from '../components/ServicesSection.tsx';
 import TestimonialsSection from '../components/TestimonialsSection.tsx';
 import HowItWorksSection from '../components/HowItWorksSection.tsx';
 import FaqSection from '../components/FaqSection.tsx';
+import { translations } from '../constants.ts';
 
 interface HomePageProps {
   language: Language;
@@ -42,8 +43,30 @@ const HomePage: React.FC<HomePageProps> = ({ language, navigate }) => {
     navigate(`/product/${product.id}`);
   };
 
-  if (isLoading || !settings) {
+  if (isLoading) {
     return <div className="text-center p-20">Loading...</div>;
+  }
+
+  // Fallback UI when settings failed to load from backend
+  if (!settings) {
+    const t = (key: string) => translations[language][key] || key;
+    return (
+      <>
+        <section className="bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+            <h1 className="text-3xl font-bold text-primary mb-2">{t('brandName')}</h1>
+            <p className="text-gray-600">{t('selectYourProduct')}</p>
+          </div>
+        </section>
+        <div id="product-section" className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <ProductSelector
+            language={language}
+            products={products}
+            onSelectProduct={handleSelectProduct}
+          />
+        </div>
+      </>
+    );
   }
 
   return (
