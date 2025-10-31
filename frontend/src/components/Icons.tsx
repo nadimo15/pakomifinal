@@ -20,6 +20,12 @@ export const XIcon: React.FC<IconProps> = (p) => (
 export const PlusIcon: React.FC<IconProps> = (p) => (
   <Svg {...p} path={<path d="M12 5v14M5 12h14"/>} />
 );
+export const UploadIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M12 21V9m0 0l-4 4m4-4l4 4M5 21h14"/>} />
+);
+export const StarIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 18l-6.2 3.1L7 14.2 2 9.3l6.9-1L12 2z"/>} />
+);
 export const TrashIcon: React.FC<IconProps> = (p) => (
   <Svg {...p} path={<path d="M3 6h18M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6M10 6V4h4v2"/>} />
 );
