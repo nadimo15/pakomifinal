@@ -38,13 +38,13 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({ language, navigate }) => {
         setSettings(siteSettings);
         setOrder(foundOrder);
 
-        if (foundOrder && siteSettings.upsell.enabled) {
+        if (foundOrder && siteSettings?.upsell?.enabled) {
             const allProducts = await getManagedProducts();
             const productTypesInOrder = new Set(foundOrder.lineItems.map(item => item.productType));
             
             let potentialUpsells = allProducts.filter(p => !productTypesInOrder.has(p.id));
 
-            if (siteSettings.upsell.productIds?.length > 0) {
+            if (siteSettings?.upsell?.productIds?.length > 0) {
                 const upsellIdSet = new Set(siteSettings.upsell.productIds);
                 potentialUpsells = potentialUpsells.filter(p => upsellIdSet.has(p.id));
             }
@@ -90,8 +90,8 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({ language, navigate }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg text-center animate-fade-in-up">
             <CheckCircleIcon className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-gray-900">{settings.thankYouPage.title}</h1>
-            <p className="mt-4 text-gray-600">{settings.thankYouPage.message}</p>
+            <h1 className="text-3xl font-bold text-gray-900">{settings?.thankYouPage?.title || 'Thank you!'}</h1>
+            <p className="mt-4 text-gray-600">{settings?.thankYouPage?.message || ''}</p>
             
             <div className="mt-6">
                 <p className="text-gray-600">{t('yourTrackingIdIs')}</p>
@@ -111,7 +111,7 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({ language, navigate }) => {
 
         {upsellProducts.length > 0 && (
             <div className="max-w-4xl mx-auto mt-16 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-                <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">{settings.upsell.title}</h2>
+                <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">{settings?.upsell?.title || 'You may also like'}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {upsellProducts.map(product => (
                         <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden text-center transition-transform transform hover:scale-105">

@@ -23,11 +23,40 @@ const ProductCustomizationPage: React.FC<ProductCustomizationPageProps> = ({ lan
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const [productsData, sizesData, formConfigData] = await Promise.all([
+        const [productsData, sizesData] = await Promise.all([
           getManagedProducts(),
           getProductSizes(),
-          getFormConfig(),
         ]);
+
+        let formConfigData: FormConfig | null = null;
+        try {
+          formConfigData = await getFormConfig();
+        } catch {
+          formConfigData = {
+            specifications: { enabled: true, fields: [
+              { id: 'dimensions', enabled: true, required: true },
+              { id: 'color', enabled: true, required: true },
+            ]},
+            quantityAndPrice: { enabled: true, fields: [
+              { id: 'quantity', enabled: true, required: true },
+              { id: 'priceDisplay', enabled: true, required: false },
+            ]},
+            yourDetails: { enabled: true, fields: [
+              { id: 'clientName', enabled: true, required: true },
+              { id: 'emailAddress', enabled: true, required: false },
+              { id: 'phone', enabled: true, required: true },
+              { id: 'wilaya', enabled: true, required: true },
+              { id: 'commune', enabled: true, required: true },
+              { id: 'address', enabled: true, required: true },
+              { id: 'whatsapp', enabled: true, required: false },
+              { id: 'viber', enabled: true, required: false },
+              { id: 'facebook', enabled: true, required: false },
+              { id: 'instagram', enabled: true, required: false },
+              { id: 'tiktok', enabled: true, required: false },
+              { id: 'otherSocials', enabled: true, required: false },
+            ]},
+          } as FormConfig;
+        }
 
         setAllProducts(productsData);
         setAllSizes(sizesData);
@@ -59,7 +88,7 @@ const ProductCustomizationPage: React.FC<ProductCustomizationPageProps> = ({ lan
 
       } catch (error) {
         console.error("Failed to load customization data:", error);
-        navigate('/');
+        // Stay on page with minimal fallbacks if possible
       } finally {
         setIsLoading(false);
       }
