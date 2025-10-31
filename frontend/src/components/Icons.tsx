@@ -72,6 +72,9 @@ export const FileIcon: React.FC<IconProps> = (p) => (
 export const DownloadIcon: React.FC<IconProps> = (p) => (
   <Svg {...p} path={<path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/>} />
 );
+export const PencilIcon: React.FC<IconProps> = (p) => (
+  <Svg {...p} path={<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/>} />
+);
 export const XCircleIcon: React.FC<IconProps> = (p) => (
   <Svg {...p} path={<path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-4-6 2 2 4-4"/>} />
 );
