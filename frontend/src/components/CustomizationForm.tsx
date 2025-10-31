@@ -167,7 +167,7 @@ const CustomizationForm: React.FC<CustomizationFormProps> = ({ language, details
       <section aria-labelledby="specifications-heading">
           <h3 id="specifications-heading" className="text-xl font-semibold text-gray-800 border-b pb-3 mb-6">{t('specifications')}</h3>
           <div className="space-y-8">
-            {formConfig.specifications.fields.map(field => field.enabled ? <div key={field.id}>{renderField(field)}</div> : null)}
+            {(formConfig.specifications?.fields || []).map(field => field.enabled ? <div key={field.id}>{renderField(field)}</div> : null)}
             <LogoUploader 
               language={language}
               hasLogo={!!details.logoUrl}
@@ -181,7 +181,7 @@ const CustomizationForm: React.FC<CustomizationFormProps> = ({ language, details
       <section aria-labelledby="quantity-heading">
           <h3 id="quantity-heading" className="text-xl font-semibold text-gray-800 border-b pb-3 mb-6">{t('quantityAndPrice')}</h3>
           <div className="bg-slate-50 rounded-lg p-6 flex flex-col items-center gap-4">
-            {formConfig.quantityAndPrice.fields.map((field: FormField) => field.enabled ? <React.Fragment key={field.id}>{renderField(field)}</React.Fragment> : null)}
+            {(formConfig.quantityAndPrice?.fields || []).map((field: FormField) => field.enabled ? <React.Fragment key={field.id}>{renderField(field)}</React.Fragment> : null)}
           </div>
       </section>
     ),

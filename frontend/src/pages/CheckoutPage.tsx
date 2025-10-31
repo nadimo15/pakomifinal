@@ -96,7 +96,7 @@ const CheckoutPage: React.FC<CheckoutPageProps> = ({ language, navigate }) => {
         return <div className="text-center p-12">Loading form...</div>
     }
 
-    const getField = (id: string) => formConfig.fields.find(f => f.id === id);
+    const getField = (id: string) => (formConfig?.fields || []).find(f => f.id === id);
 
     return (
         <div className="bg-gray-50">
