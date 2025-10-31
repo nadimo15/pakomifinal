@@ -16,10 +16,10 @@ services:
       - key: FRONTEND_URL
         value: https://pakomi-frontend.onrender.com
       - key: PORT
-        value: 3001
-    autoDeploy: true
-    plan: free
+        value: "3001"
     postDeployCommand: "npm run db:push && npm run seed"
+    plan: free
+    autoDeploy: true
 
   - type: web
     name: pakomi-frontend
