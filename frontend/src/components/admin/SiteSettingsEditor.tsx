@@ -14,7 +14,60 @@ interface SiteSettingsEditorProps {
 
 const SiteSettingsEditor: React.FC<SiteSettingsEditorProps> = ({ language, settings, onUpdate }) => {
     const { t } = useLocalization(language);
-    const [localSettings, setLocalSettings] = useState<SiteSettings>(settings);
+
+    const normalize = (s: SiteSettings): SiteSettings => ({
+        brandName: s?.brandName || '',
+        logoB64: s?.logoB64 || '',
+        hero: {
+            title: s?.hero?.title || '',
+            subtitle: s?.hero?.subtitle || '',
+            ctaText: s?.hero?.ctaText || '',
+            heroImageB64: s?.hero?.heroImageB64 || '',
+        },
+        services: {
+            enabled: !!s?.services?.enabled,
+            title: s?.services?.title || '',
+            items: s?.services?.items || [],
+        },
+        howItWorks: {
+            enabled: !!s?.howItWorks?.enabled,
+            title: s?.howItWorks?.title || '',
+            steps: s?.howItWorks?.steps || [],
+        },
+        testimonials: {
+            enabled: !!s?.testimonials?.enabled,
+            title: s?.testimonials?.title || '',
+            items: s?.testimonials?.items || [],
+        },
+        faq: {
+            enabled: !!s?.faq?.enabled,
+            title: s?.faq?.title || '',
+            items: s?.faq?.items || [],
+        },
+        thankYouPage: {
+            title: s?.thankYouPage?.title || 'Thank you!',
+            message: s?.thankYouPage?.message || 'Your order was received. We will contact you shortly.',
+        },
+        upsell: {
+            enabled: !!s?.upsell?.enabled,
+            title: s?.upsell?.title || 'You may also like',
+            productIds: s?.upsell?.productIds || [],
+        },
+        tracking: {
+            facebookPixelId: s?.tracking?.facebookPixelId || '',
+            tiktokPixelId: s?.tracking?.tiktokPixelId || '',
+            snapchatPixelId: s?.tracking?.snapchatPixelId || '',
+            googleAnalyticsId: s?.tracking?.googleAnalyticsId || '',
+        },
+        footer: {
+            address: s?.footer?.address || '',
+            email: s?.footer?.email || '',
+            phone: s?.footer?.phone || '',
+            links: s?.footer?.links || [],
+        }
+    });
+
+    const [localSettings, setLocalSettings] = useState<SiteSettings>(normalize(settings));
     const [isSaved, setIsSaved] = useState(false);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [activeAccordion, setActiveAccordion] = useState<string | null>('general');
@@ -22,6 +75,10 @@ const SiteSettingsEditor: React.FC<SiteSettingsEditorProps> = ({ language, setti
     useEffect(() => {
         getManagedProducts().then(setAllProducts).catch(console.error);
     }, []);
+
+    useEffect(() => {
+        setLocalSettings(normalize(settings));
+    }, [settings]);
     
     // Force re-render on drop to update visuals
     const [dragCounter, setDragCounter] = useState(0);
