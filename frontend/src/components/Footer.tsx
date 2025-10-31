@@ -34,7 +34,7 @@ const Footer: React.FC<{ language: Language }> = ({ language }) => {
 
     if (!settings) return null;
 
-    const { footer, brandName } = settings;
+    const { footer = {} as any, brandName } = settings;
 
     return (
         <footer className="bg-gray-800 text-white mt-16">
@@ -47,15 +47,15 @@ const Footer: React.FC<{ language: Language }> = ({ language }) => {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
                         <ul className="space-y-2 text-gray-300">
-                            {footer.address && <li>{footer.address}</li>}
-                            {footer.email && <li><a href={`mailto:${footer.email}`} className="hover:text-primary">{footer.email}</a></li>}
-                            {footer.phone && <li><a href={`tel:${footer.phone.replace(/\s/g, '')}`} className="hover:text-primary">{footer.phone}</a></li>}
+                            {footer?.address && <li>{footer.address}</li>}
+                            {footer?.email && <li><a href={`mailto:${footer.email}`} className="hover:text-primary">{footer.email}</a></li>}
+                            {footer?.phone && <li><a href={`tel:${String(footer.phone).replace(/\s/g, '')}`} className="hover:text-primary">{footer.phone}</a></li>}
                         </ul>
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
                         <div className="flex space-x-4">
-                            {footer.links.map(link => {
+                            {(footer?.links || []).map((link: any) => {
                                 const Icon = iconMap[link.platform] || LinkIcon;
                                 return (
                                     <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary transition-colors">
