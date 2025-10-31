@@ -1,6 +1,7 @@
 
 
 import express, { Express, Request, Response } from 'express';
+import http from 'http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import multer from 'multer';
@@ -15,7 +16,7 @@ import { authMiddleware } from './middleware/auth.js';
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT || 3001;
+const PORT: number = parseInt(process.env.PORT ?? '', 10) || 3001;
 
 // --- Middleware ---
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }));
@@ -69,6 +70,7 @@ app.get('/api/admin/shipping/track/:orderId', shippingController.trackShipment);
 
 
 // --- Server ---
-app.listen(port, '0.0.0.0', () => {
-    console.log(`[server]: Server is running at http://0.0.0.0:${port}`);
+const server = http.createServer(app);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`[server]: Server is running at http://0.0.0.0:${PORT}`);
 });
