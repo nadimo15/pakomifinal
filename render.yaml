@@ -18,7 +18,6 @@ services:
       - key: PORT
         value: "3001"
     autoDeploy: true
-    plan: free
 
   - type: web
     name: pakomi-frontend
@@ -33,7 +32,6 @@ services:
       - type: rewrite
         source: /*
         destination: /index.html
-    plan: free
     autoDeploy: true
 
 databases:
